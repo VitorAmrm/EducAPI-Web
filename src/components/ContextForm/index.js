@@ -1,29 +1,84 @@
 import React from 'react'
-import {Form} from 'react-bootstrap'
+import {Form,Button} from 'react-bootstrap'
+import {Formik} from 'formik'
+import {Contextschema} from '../../utils/FormSchema'
+
 
 export default function ContextForm (){
     return(
-        <Form>
-        <Form.Group controlId="">
-            <Form.Label>Nome do contexto</Form.Label>
-            <Form.Control type="text" placeholder="Nome do Contexto" />
-            <Form.Text className="text-muted">escolha um nome que represente o contexto</Form.Text>
-        </Form.Group>
-        <Form.Group controlId="">
-            <Form.Label>Link da Imagem</Form.Label>
-            <Form.Control type="Url" placeholder="link da imagem" />
-            <Form.Text className="text-muted">escolha uma imagem que represente o contexto</Form.Text>
-        </Form.Group>
-        <Form.Group controlId="">
-            <Form.Label>Link </Form.Label>
-            <Form.Control type="Url" placeholder="link do video" />
-            <Form.Text className="text-muted">escolha um vídeo que represente o contexto</Form.Text>
-        </Form.Group>
-        <Form.Group controlId="">
-            <Form.Label>Password</Form.Label>
-            <Form.Control type="Url" placeholder="link do audio" />
-            <Form.Text className="text-muted">escolha um áudio que represente o contexto</Form.Text>
-        </Form.Group>
-        </Form>
+        <Formik validationSchema={Contextschema} onSubmit={values =>{alert(JSON.stringify(values))}} initialValues={{name: 'Otto',imageUrl: '',videoUrl: '',audioUrl: ''}}>
+        {(
+        {
+                        handleSubmit,
+                        handleChange,
+                        handleBlur,
+                        values,
+                        touched,
+                        isValid,
+                        errors,
+                        }) => (
+                            <Form noValidate onSubmit={handleSubmit}>
+                                <Form.Group controlId="">
+                                    <Form.Label>Nome do contexto</Form.Label>
+                                    <Form.Control type="text" placeholder="Nome do Contexto" name='name'
+                                                                onChange={handleChange} 
+                                                                value={values.name}
+                                                                isValid={touched.name && !errors.name}
+                                                                isInvalid={!!errors.name}
+                                                                onBlur={handleBlur}/>
+
+                                    <Form.Control.Feedback ></Form.Control.Feedback>            
+                                    <Form.Control.Feedback type='invalid'>{errors.name}</Form.Control.Feedback>
+                                </Form.Group>
+
+                                <Form.Group controlId="">
+                                    <Form.Label>Link da Imagem</Form.Label>
+                                    <Form.Control type="Url" placeholder="Link da Imagem" name='imageUrl'
+                                                                onChange={handleChange} 
+                                                                value={values.imageUrl}
+                                                                isValid={touched.imageUrl && !errors.imageUrl}
+                                                                isInvalid={!!errors.imageUrl}
+                                                                onBlur={handleBlur}/>
+
+                                    <Form.Control.Feedback ></Form.Control.Feedback>            
+                                    <Form.Control.Feedback type='invalid'>{errors.imageUrl}</Form.Control.Feedback>
+                                </Form.Group>
+
+                                <Form.Group controlId="">
+                                    <Form.Label>Link do Vídeo</Form.Label>
+                                    <Form.Control type="Url" placeholder="Link do Vídeo" name='videoUrl'
+                                                                onChange={handleChange} 
+                                                                value={values.videoUrl}
+                                                                isValid={touched.videoUrl && !errors.videoUrl}
+                                                                isInvalid={!!errors.videoUrl}
+                                                                onBlur={handleBlur}/>
+
+                                    <Form.Control.Feedback ></Form.Control.Feedback>            
+                                    <Form.Control.Feedback type='invalid'>{errors.videoUrl}</Form.Control.Feedback>
+                                </Form.Group>
+
+                                <Form.Group controlId="">
+                                    <Form.Label>Link do Áudio</Form.Label>
+                                    <Form.Control type="Url" placeholder="Link do Áudio" name='audioUrl'
+                                                                onChange={handleChange} 
+                                                                value={values.audioUrl}
+                                                                isValid={touched.audioUrl && !errors.audioUrl}
+                                                                isInvalid={!!errors.audioUrl}
+                                                                onBlur={handleBlur}/>
+
+                                    <Form.Control.Feedback ></Form.Control.Feedback>            
+                                    <Form.Control.Feedback type='invalid'>{errors.audioUrl}</Form.Control.Feedback>
+                                </Form.Group>
+                            
+                                <Button variant='primary' type='submit'>
+                                    Cadastrar
+                                </Button>
+
+                            </Form>
+                            
+
+                        )}
+        </Formik>
+        
     )
 }

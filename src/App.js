@@ -1,14 +1,14 @@
 
 
 import React from 'react';
-import LoginPage from './pages/login/index'
+import RegisterPage from './pages/register/index'
 
 
 export default function App(){
     
         return(
             
-                <LoginPage/>
+                <RegisterPage/>
             
         )
     }
