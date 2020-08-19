@@ -17,6 +17,12 @@ ContextForm{
     margin-bottom: 5%;
 }
 .separator{
-    margin: 50%;
+    margin-bottom: 8%;
+}
+.body{
+    background-color: rgb(21, 168, 173);
+}
+.footer-container{
+    background-color: rgb(248, 249, 250) ;
 }
 

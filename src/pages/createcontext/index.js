@@ -6,7 +6,7 @@ import './style.css'
 
 export default function CreateContext(){
     return (
-        <div> 
+        <div className='body'> 
             <Navigation/>
             <div className="createcontext-box">
                 <h2>Criando um Contexto</h2>
@@ -15,7 +15,9 @@ export default function CreateContext(){
             <div className='separator'>
 
             </div>
+            <div className='footer-container'>
             <Footer/>
+            </div>
         </div>
     );
 }

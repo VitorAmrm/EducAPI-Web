@@ -48,7 +48,7 @@ export default function Footer(){
                             </Row>
                         </Col>
                     </Row>
-                    <Row  className="justify-content-md-center border-top" >
+                    <Row  className="border-top" >
                         <p>Copyright © 2020 Apps4Society</p>
                     </Row>
             </Container>
