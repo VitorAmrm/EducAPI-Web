@@ -1,7 +1,7 @@
 import React from 'react'
 import {Form,Button} from 'react-bootstrap'
 import {Formik} from 'formik'
-import {Contextschema} from '../../utils/FormSchema'
+import {Contextschema} from '../../../utils/FormSchema'
 
 
 export default function ContextForm (){

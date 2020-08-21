@@ -1,6 +1,6 @@
 import React from 'react'
 import Navigation from '../../components/Navigation/Navigation'
-import ContextForm from '../../components/ContextForm/index'
+import ContextForm from '../../components/ContextForm/create/index'
 import Footer from '../../components/Footer/index'
 import './style.css'
 
