@@ -5,6 +5,7 @@ import RegisterPage from './pages/register/index'
 import Home from './pages/home/index'
 import CreateContext from './pages/createcontext/index'
 import CreateChallenge from './pages/createchallenge/index'
+import Gallery from './pages/Gallery/index'
 
 export default function Routes(){
     return (
@@ -15,6 +16,7 @@ export default function Routes(){
                     <Route path="/createcontext"  component={CreateContext}/>
                     <Route path="/createchallenge"  component={CreateChallenge}/>
                     <Route path="/register" component={RegisterPage}/>
+                    <Route path="/gallery" component={Gallery}/>
                 </Switch>
         </Router>
     );
