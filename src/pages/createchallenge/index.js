@@ -2,6 +2,7 @@ import React from 'react'
 import Navigation from '../../components/Navigation/Navigation'
 import ChallengeForm from '../../components/ChallengeForm/index'
 import './style.css'
+import Footer from '../../components/Footer/index'
 
 export default function CreateChallenge(){
     return (
@@ -11,6 +12,7 @@ export default function CreateChallenge(){
                 <h2>Criando um Desafio</h2>
                 <ChallengeForm />
             </div>
+            <Footer/>
         </div>
     );
 }

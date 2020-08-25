@@ -4,10 +4,11 @@ import {Link} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import {Formik} from 'formik'
 import {Loginschema} from '../../utils/FormSchema'
-
+import './style.css'
 
 export default function LoginForm(){
     return(
+        
         <Formik validationSchema={Loginschema} onSubmit={values =>{alert(JSON.stringify(values))}} initialValues={{email: 'Otto',password: ''}}>
         {(
         {
@@ -58,7 +59,7 @@ export default function LoginForm(){
         
         
         }</Formik>
-
+       
 
 
 

@@ -5,9 +5,12 @@ import 'bootstrap/dist/css/bootstrap.css'
 import image from '../../assets/logotipo.png'
 import {Link} from 'react-router-dom'
 
-export default function Navigation(){
-    return(
 
+export default function Navigation(){
+    
+
+
+    return(
         <Navbar bg="light" expand="lg">
             <Navbar.Brand><Image id="logo" src={image}/></Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -26,5 +29,7 @@ export default function Navigation(){
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
+        
+        
     );
 }
