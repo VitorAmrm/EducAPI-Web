@@ -1,20 +1,37 @@
 
 .table-image{
-    width: 200px;
     height: 100px;
+    width: 200px;
 }
 
-td{
-   justify-content: center;
-   align-content: center; 
-}
-.container-table{
-    padding: 10px;
-    
-    
-}
+
 Table{
     
     border-radius: 25px;
     box-shadow: 7px 12px 6px 1px rgba(189,185,189,0.55);
 }
+.actions{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.icon{
+    margin: 5px;
+}
+.ant-tabs{
+    font-weight: 900;
+    color:rgb(51, 51, 51);
+}
+.background-table{
+    background-color: rgb(19, 168, 173);
+    padding:40px;
+}
+.ant-tabs-nav-wrap{
+    background: white;
+    margin-top:10px;
+}
+.ant-table-thead,td,th{
+    text-align:center !important;
+}
+

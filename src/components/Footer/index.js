@@ -6,8 +6,12 @@ import './style.css'
 
 export default function Footer(){
 
+    function getYear(){
+        return new Date().getUTCFullYear()
+    }
+
     return(
-            <Container fluid>
+            <Container >
                     <Row className='divider-line'/>
                     <Row className="justify-content-md-center">
                         <Col className='column-margin-lr'>
@@ -49,7 +53,7 @@ export default function Footer(){
                         </Col>
                     </Row>
                     <Row  className="border-top" >
-                        <p>Copyright © 2020 Apps4Society</p>
+                        <p>Copyright © {getYear()} Apps4Society</p>
                     </Row>
             </Container>
     );

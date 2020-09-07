@@ -1,15 +1,40 @@
 import React from 'react'
 import {Button,Form} from 'react-bootstrap'
-import {Link} from 'react-router-dom'
+//import {Link} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css'
 import {Formik} from 'formik'
 import {Loginschema} from '../../utils/FormSchema'
 import './style.css'
+import api from '../../service/api'
+import {useHistory} from 'react-router-dom'
+
+
 
 export default function LoginForm(){
-    return(
+
+    const history = useHistory();
+
+    async function authorization(email,password){
         
-        <Formik validationSchema={Loginschema} onSubmit={values =>{alert(JSON.stringify(values))}} initialValues={{email: 'Otto',password: ''}}>
+        const invalid = "Invalid e-mail or password. Login not successful.";
+        
+        await api.post('auth/login',{email: email,password: password})
+                             .then(response => {
+                                 if(response.data.token === invalid){
+                                    console.log( {'isValid': false, 'message': response.data.token})
+                                    alert("senha ou email invalido, tente novamente")
+                                 }else{
+                                    localStorage.setItem('token',response.data.token)
+                                    localStorage.setItem('email',email)
+                                    localStorage.setItem('token_exp',new Date().getHours()*60+new Date().getMinutes+1800)
+                                    history.push('/gallery')
+                                 }
+                             })
+                             .catch(error => console.log(error))
+    }
+
+    return(
+        <Formik validationSchema={Loginschema} onSubmit={values =>{console.log(authorization(values.email,values.password))}} initialValues={{email: 'Otto',password: ''}}>
         {(
         {
                         handleSubmit,
@@ -45,11 +70,11 @@ export default function LoginForm(){
                                     <Form.Control.Feedback type='invalid'>{errors.password}</Form.Control.Feedback>
                                 </Form.Group>
                                 
-                                <Link to="/home">
+                                
                                 <Button variant="primary" type="submit">
                                     Entrar
                                 </Button>
-                                </Link>
+                                
                                 
                                 <Button variant="secondary" type="submit">
                                     Ainda Não tem Cadastro?

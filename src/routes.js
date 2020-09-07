@@ -9,10 +9,10 @@ import Gallery from './pages/Gallery/index'
 
 export default function Routes(){
     return (
-        <Router>
+        <Router >
                 <Switch>
-                    <Route path="/login" exact component={LoginPage}/>
-                    <Route path="/" exact component={Home}/>
+                    <Route path="/login" component={LoginPage}/>
+                    <Route path="/" exact={true} component={Home}/>
                     <Route path="/createcontext"  component={CreateContext}/>
                     <Route path="/createchallenge"  component={CreateChallenge}/>
                     <Route path="/register" component={RegisterPage}/>

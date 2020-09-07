@@ -3,18 +3,21 @@ import './style.css'
 import {Form,Button} from 'react-bootstrap'
 import {Registerschema} from '../../utils/FormSchema'
 import {Formik} from 'formik'
+import api from '../../service/api'
 
 
 export default function RegisterForm(){
 
 
+    function postUser(values){
+         api.post('v1/api/users',{email: values.email,name: values.name,password: values.password})
+        .then(response => {alert(JSON.stringify(response.data))})
+        .catch(error => {alert(error)})
+    }
 
     return(
         
-                   
-
-                                                        //aqui vai entra o api.post(user)
-    <Formik validationSchema={Registerschema} onSubmit={values =>{alert(JSON.stringify(values))}} initialValues={{name: 'Mark',email: 'Otto',password: '',password2: ''}}>
+    <Formik validationSchema={Registerschema} onSubmit={values =>{postUser(values)}} initialValues={{name: '',email: '',password: '',password2: ''}}>
         {(
         {
                         handleSubmit,

@@ -2,11 +2,29 @@ import React from 'react'
 import {Form,Button} from 'react-bootstrap'
 import {Formik} from 'formik'
 import {Contextschema} from '../../../utils/FormSchema'
+import api from '../../../service/api'
+import SessionNotExist from '../../../utils/SessionNotExist'
+
 
 
 export default function ContextForm (){
+
+    const [show,setShow] = React.useState(false)
+
+    React.useEffect(() => {localStorage.getItem('token') ? setShow(false) : setShow(true)})
+    
+
+    function onSubmit(values){
+        const token = localStorage.getItem('token')
+
+            api.post('/v1/api/auth/contexts',{values},{'Authorization': token})
+                    .then(response =>{alert(JSON.stringify(response.data))})
+                    .catch(error => {alert(error); console.log(values)})
+
+    }
+
     return(
-        <Formik validationSchema={Contextschema} onSubmit={values =>{alert(JSON.stringify(values))}} initialValues={{name: 'Otto',imageUrl: '',videoUrl: '',audioUrl: ''}}>
+        <Formik validationSchema={Contextschema} onSubmit={values =>{onSubmit(values)}} initialValues={{name: '',imageUrl: '',videoUrl: '',soundUrl: ''}}>
         {(
         {
                         handleSubmit,
@@ -18,6 +36,7 @@ export default function ContextForm (){
                         errors,
                         }) => (
                             <Form noValidate onSubmit={handleSubmit}>
+                                <SessionNotExist show={show}/>
                                 <Form.Group controlId="">
                                     <Form.Label>Nome do contexto</Form.Label>
                                     <Form.Control type="text" placeholder="Nome do Contexto" name='name'
@@ -33,7 +52,7 @@ export default function ContextForm (){
 
                                 <Form.Group controlId="">
                                     <Form.Label>Link da Imagem</Form.Label>
-                                    <Form.Control type="Url" placeholder="Link da Imagem" name='imageUrl'
+                                    <Form.Control type='text' placeholder="Link da Imagem" name='imageUrl'
                                                                 onChange={handleChange} 
                                                                 value={values.imageUrl}
                                                                 isValid={touched.imageUrl && !errors.imageUrl}
@@ -46,7 +65,7 @@ export default function ContextForm (){
 
                                 <Form.Group controlId="">
                                     <Form.Label>Link do Vídeo</Form.Label>
-                                    <Form.Control type="Url" placeholder="Link do Vídeo" name='videoUrl'
+                                    <Form.Control type='text' placeholder="Link do Vídeo" name='videoUrl'
                                                                 onChange={handleChange} 
                                                                 value={values.videoUrl}
                                                                 isValid={touched.videoUrl && !errors.videoUrl}
@@ -59,15 +78,15 @@ export default function ContextForm (){
 
                                 <Form.Group controlId="">
                                     <Form.Label>Link do Áudio</Form.Label>
-                                    <Form.Control type="Url" placeholder="Link do Áudio" name='audioUrl'
+                                    <Form.Control type='text' placeholder="Link do Áudio" name='soundUrl'
                                                                 onChange={handleChange} 
-                                                                value={values.audioUrl}
-                                                                isValid={touched.audioUrl && !errors.audioUrl}
-                                                                isInvalid={!!errors.audioUrl}
+                                                                value={values.soundUrl}
+                                                                isValid={touched.soundUrl && !errors.soundUrl}
+                                                                isInvalid={!!errors.soundUrl}
                                                                 onBlur={handleBlur}/>
 
                                     <Form.Control.Feedback ></Form.Control.Feedback>            
-                                    <Form.Control.Feedback type='invalid'>{errors.audioUrl}</Form.Control.Feedback>
+                                    <Form.Control.Feedback type='invalid'>{errors.soundUrl}</Form.Control.Feedback>
                                 </Form.Group>
                             
                                 <Button variant='primary' type='submit' block>

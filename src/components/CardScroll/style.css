@@ -16,6 +16,7 @@
     flex-direction: column;
     justify-items: center;
     align-items: center;
+    padding: 20px 0px 0px 0px;
 }
 .card:hover{
     transform: translate(0,-10px);
