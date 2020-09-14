@@ -9,7 +9,7 @@ import Gallery from './pages/Gallery/index'
 
 export default function Routes(){
     return (
-        <Router >
+        <Router>
                 <Switch>
                     <Route path="/login" component={LoginPage}/>
                     <Route path="/" exact={true} component={Home}/>

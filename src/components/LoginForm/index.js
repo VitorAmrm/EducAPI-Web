@@ -6,7 +6,8 @@ import {Formik} from 'formik'
 import {Loginschema} from '../../utils/FormSchema'
 import './style.css'
 import api from '../../service/api'
-import {useHistory} from 'react-router-dom'
+import {useHistory,Link} from 'react-router-dom'
+
 
 
 
@@ -14,11 +15,12 @@ export default function LoginForm(){
 
     const history = useHistory();
 
-    async function authorization(email,password){
+
+   function authorization(email,password){
         
         const invalid = "Invalid e-mail or password. Login not successful.";
         
-        await api.post('auth/login',{email: email,password: password})
+        api.post('auth/login',{email: email,password: password})
                              .then(response => {
                                  if(response.data.token === invalid){
                                     console.log( {'isValid': false, 'message': response.data.token})
@@ -71,14 +73,16 @@ export default function LoginForm(){
                                 </Form.Group>
                                 
                                 
-                                <Button variant="primary" type="submit">
+                                <Button variant="primary" type="submit" >
                                     Entrar
                                 </Button>
                                 
                                 
-                                <Button variant="secondary" type="submit">
+                                <Link to='/register'><Button className='register-btn'variant="info" type="submit">
                                     Ainda Não tem Cadastro?
-                                </Button>
+                                </Button></Link>
+
+                              
     </Form>
                         )
         

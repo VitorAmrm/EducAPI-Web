@@ -1,21 +1,25 @@
 import React,{useState,useEffect} from 'react'
-import {Form,Button} from 'react-bootstrap'
+import {Form,Button,InputGroup} from 'react-bootstrap'
 import {Formik} from 'formik'
-import {Challengeschema} from '../../utils/FormSchema'
-import SessionNotExist from '../../utils/SessionNotExist'
-import api from '../../service/api'
+import {Challengeschema} from '../../../utils/FormSchema'
+import SessionNotExist from '../../../utils/SessionNotExist'
+import api from '../../../service/api'
+import {BsImage} from 'react-icons/bs'
+import ImageShow from '../../ImageShow/index'
 
- const ChallengeForm = () => {
+ const ChallengeFormCreate = () => {
 
     const [contexts,setContexts] = useState(0)
     const [show,setShow] = useState(1)
+    const [showModal,setShowModal] = useState(false)
+    const [url,setUrl] = useState('')
 
     useEffect(() =>{
         
         if(localStorage.getItem('token')){ 
             setShow(false)
             handleContexts()
-        }else{  setShow(true)} 
+        }else{  setShow(false)} 
                     
                 },[])
 
@@ -25,6 +29,16 @@ import api from '../../service/api'
             const {id,name} = context
             return <option value={id}>{name}</option>
         })
+    }
+
+    function showImages(){
+        setShowModal(true)
+    }
+    function modalClose(){setShowModal(false)}
+    
+    function getImageUrlModal(event) {
+        setUrl(event)
+        
     }
 
     function handleContexts(){
@@ -40,14 +54,14 @@ import api from '../../service/api'
     function postChallenge(values){
         const token = localStorage.getItem('token')
         api.post(`v1/api/auth/challenges/${values.context}`,{word: values.word,imageUrl: values.imageUrl,videoUrl: values.videoUrl, soundUrl: values.soundUrl},{Authorization: token})
-                    .then(response => {alert(response.data)})
-                    .catch (error => {alert(error)})
+                    .then(response => {alert(` O deasfio ${response.data.word} foi criado`)})
+                    .catch (error => {alert(`Ocorreu um erro, Tente novamente :: ${error} `)})
 
     }
 
     return(
 
-        <Formik validationSchema={Challengeschema} onSubmit={values =>{postChallenge(values)}} initialValues={{context: 0 ,word: '',imageUrl: '',videoUrl: '',soundUrl: ''}}>
+        <Formik validationSchema={Challengeschema} onSubmit={values =>{postChallenge(values)}} initialValues={{context: 0 ,word: 'pokemon',imageUrl: 'initial',videoUrl: '',soundUrl: ''}}>
         {(
         {
                         handleSubmit,
@@ -63,17 +77,17 @@ import api from '../../service/api'
                                  <Form.Group>
                                     <Form.Label>Contexto do desafio</Form.Label>
                                     <Form.Control as="select" name='context' value={values.context}>
-                                        <datalist id='context'>
-                                            <option>gggggg</option>
-                                            <option>ghhhhhh</option>
-                                            <option>jjjjjjj</option>
-                                        </datalist>
+                                        
+                                            <option>reggae</option>
+                                            <option>musica</option>
+                                            <option>pensante</option>
+                                        
                                     </Form.Control>
                                     <Form.Control.Feedback ></Form.Control.Feedback>            
                                     <Form.Control.Feedback type='invalid'>{errors.context}</Form.Control.Feedback>
                                 
                                 </Form.Group>
-                                <Form.Group controlId="">
+                                <Form.Group controlId="formWord">
                                     <Form.Label>Palavra do Desafio</Form.Label>
                                     <Form.Control type="text" placeholder="Palavra do Desafio" name='word'
                                                             onChange={handleChange} 
@@ -85,8 +99,13 @@ import api from '../../service/api'
                                     <Form.Control.Feedback type='invalid'>{errors.word}</Form.Control.Feedback>
                                 </Form.Group>
 
-                                <Form.Group controlId="">
+                                <Form.Group controlId="formImageUrl">
+                                    <ImageShow  handleClose={() => modalClose()} handleURL={(value) => {getImageUrlModal(value);values.imageUrl = url}}  show={showModal} query={values.word}/>
                                     <Form.Label>Link da Imagem</Form.Label>
+                                    <InputGroup>
+                                    <InputGroup.Append>
+                                        <Button variant="secondary" onClick={() => {showImages()}}><BsImage size='16'/></Button>
+                                    </InputGroup.Append>
                                     <Form.Control  placeholder="Link da Imagem" name='imageUrl'
                                                                     onChange={handleChange} 
                                                                     value={values.imageUrl}
@@ -95,9 +114,11 @@ import api from '../../service/api'
                                                                     onBlur={handleBlur} />
                                         <Form.Control.Feedback ></Form.Control.Feedback>            
                                         <Form.Control.Feedback type='invalid'>{errors.imageUrl}</Form.Control.Feedback>
+                                    </InputGroup>
                                 </Form.Group>
 
-                                <Form.Group controlId="">
+
+                                <Form.Group controlId="formVideoUrl">
                                     <Form.Label>Link do Vídeo </Form.Label>
                                     <Form.Control  placeholder="Link do Vídeo" name='videoUrl'
                                                                             onChange={handleChange} 
@@ -109,7 +130,7 @@ import api from '../../service/api'
                                     <Form.Control.Feedback type='invalid'>{errors.videoUrl}</Form.Control.Feedback>
                                 </Form.Group>
 
-                                <Form.Group controlId="">
+                                <Form.Group controlId="formSoundUrl">
                                     <Form.Label>Link do Áudio</Form.Label>
                                     <Form.Control  placeholder="Link do Áudio" name='soundUrl'
                                                                                 onChange={handleChange} 
@@ -132,4 +153,4 @@ import api from '../../service/api'
     )
 }
 
-export default ChallengeForm;
+export default ChallengeFormCreate

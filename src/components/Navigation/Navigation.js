@@ -15,7 +15,9 @@ export default function Navigation(){
 
     const Logout = () => {
         localStorage.removeItem('token')
-        history.push('/')
+        localStorage.removeItem('email')
+        localStorage.removeItem('token_exp')
+        history.push('/login')
     }
     const Login = () =>{
         history.push('/login')
@@ -27,8 +29,8 @@ export default function Navigation(){
 
     function LogButton() {
         if(Logio === 'Entrar'){
-            return (<Link to='/login'><OverlayTrigger key='bottom' placement='bottom' overlay={<Tooltip>Faça Login ou Registre-se</Tooltip>}>
-                <Nav.Link onClick={Login}>{Logio}</Nav.Link></OverlayTrigger></Link>)
+            return (<OverlayTrigger key='bottom' placement='bottom' overlay={<Tooltip>Faça Login ou Registre-se</Tooltip>}>
+                <Nav.Link onClick={Login}><Link to='/login'>{Logio}</Link></Nav.Link></OverlayTrigger>)
         }else{
         return  (<Link to='/'><OverlayTrigger key='bottom' placement='bottom' overlay={<Tooltip>Logado como : <strong>{localStorage.getItem('email')}</strong></Tooltip>}>
             <Nav.Link onClick={Logout}>{Logio}</Nav.Link></OverlayTrigger></Link>)
@@ -42,16 +44,16 @@ export default function Navigation(){
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Link to="/home"><Nav.Link>Home</Nav.Link></Link>
+                    <Nav.Link><Link to="/">Home</Link></Nav.Link>
                     <NavDropdown title="Contextos" id="basic-nav-dropdown">
-                        <Link to="/createcontext"><NavDropdown.Item>Criar</NavDropdown.Item></Link>
+                        <NavDropdown.Item><Link to="/createcontext">Criar</Link></NavDropdown.Item>
                         <NavDropdown.Item>Editar</NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Desafios" id="basic-nav-dropdown">
-                        <Link to="/createchallenge"><NavDropdown.Item>Criar</NavDropdown.Item></Link>
+                        <NavDropdown.Item><Link to='/createchallenge'>Criar</Link></NavDropdown.Item>
                         <NavDropdown.Item>Editar</NavDropdown.Item>
                     </NavDropdown>
-                    <Link to='/gallery'><Nav.Link>Galeria</Nav.Link></Link>
+                    <Nav.Link><Link to='/gallery'>Galeria</Link></Nav.Link>
                 </Nav>
                 <Nav>
                     {LogButton()}

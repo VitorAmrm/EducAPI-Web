@@ -1,6 +1,6 @@
 import React from 'react'
 import Navigation from '../../components/Navigation/Navigation'
-import ChallengeFormCreate from '../../components/ChallengeForm/create/index'
+import ChallengeFormEdit from '../../components/ChallengeForm/edit/index'
 import './style.css'
 import Footer from '../../components/Footer/index'
 
@@ -9,8 +9,8 @@ export default function CreateChallenge(){
         <div> 
             <Navigation/>
             <div className="createchallenge-box">
-                <h2>Criando Um Desafio</h2>
-                <ChallengeFormCreate/>
+                <h2>Criando um Desafio</h2>
+                <ChallengeFormEdit />
             </div>
             <Footer/>
         </div>

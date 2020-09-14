@@ -21,17 +21,17 @@ import * as yup from 'yup'
 
  const Contextschema = yup.object().shape({
      name: yup.string().matches(/[çÇa-zA-Z.*\s]+$/,"caractere especial proibido").min(2,"no mínimo 2 caracteres").max(30,"no máximo 30 caracteres").required("Campo Obrigatório"),
-     imageUrl: yup.string().url().required("Campo Obrigatório"),
-     videoUrl: yup.string().url(),
-     soundUrl: yup.string().url()
+     imageUrl: yup.string().url("Digite uma URL válida").required("Campo Obrigatório"),
+     videoUrl: yup.string().url("Digite uma URL válida"),
+     soundUrl: yup.string().url("Digite uma URL válida")
  })
 
  const Challengeschema = yup.object().shape({
     context: yup.number().required("Campo Obrigatório"),
     word: yup.string().matches(/[çÇa-zA-Z.*\s]+$/,"Caractere especial proibido").min(2,"no mínimo 2 caracteres").max(30,"no máximo 30 caracteres").required("Campo Obrigatório"),
-    imageUrl: yup.string().url().required("Campo Obrigatório"),
-    videoUrl: yup.string().url(),
-    soundUrl: yup.string().url(),
+    imageUrl: yup.string().url("Digite uma URL válida").required("Campo Obrigatório"),
+    videoUrl: yup.string().url("Digite uma URL válida"),
+    soundUrl: yup.string().url("Digite uma URL válida"),
     
 })
  

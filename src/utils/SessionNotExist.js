@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import {Modal,Button} from 'react-bootstrap'
 import { useHistory } from 'react-router-dom';
 
@@ -8,6 +8,8 @@ export default function SessionNotExist(props)  {
     const [show, setShow] = React.useState(props.show);
     
     const history = useHistory();
+
+    useEffect(() => {setShow(props.show)},[props.show])
 
     function handleInicio(){
        setShow(false) 

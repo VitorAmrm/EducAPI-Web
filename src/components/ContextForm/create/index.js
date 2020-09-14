@@ -1,25 +1,46 @@
-import React from 'react'
-import {Form,Button} from 'react-bootstrap'
+import React,{useState,useEffect} from 'react'
+import {Form,Button,InputGroup} from 'react-bootstrap'
 import {Formik} from 'formik'
 import {Contextschema} from '../../../utils/FormSchema'
 import api from '../../../service/api'
 import SessionNotExist from '../../../utils/SessionNotExist'
+import {BsImage} from 'react-icons/bs'
+import ImageShow from '../../ImageShow/index'
 
 
 
-export default function ContextForm (){
+const ContextFormCreate = () => {
 
-    const [show,setShow] = React.useState(false)
+    const [show,setShow] = useState(1)
+    const [showModal,setShowModal] = useState(false)
+    const [url,setUrl] = useState('')
 
-    React.useEffect(() => {localStorage.getItem('token') ? setShow(false) : setShow(true)})
+
+    useEffect(() =>{
+        
+        if(localStorage.getItem('token')){ 
+            setShow(false)
+        }else{  setShow(true)} 
+                    
+                },[])
+                
+    function showImages(){
+        setShowModal(true)
+    }
     
+    function modalClose(){setShowModal(false)}
+    
+    function getImageUrlModal(event) {
+        setUrl(event)
+        
+    }
 
     function onSubmit(values){
         const token = localStorage.getItem('token')
 
             api.post('/v1/api/auth/contexts',{values},{'Authorization': token})
-                    .then(response =>{alert(JSON.stringify(response.data))})
-                    .catch(error => {alert(error); console.log(values)})
+                    .then(response =>{alert(`O Contexto ${response.data.name} foi criado`)})
+                    .catch(error => {alert('Ocorreu um erro, Tente Novamente')})
 
     }
 
@@ -35,6 +56,7 @@ export default function ContextForm (){
                         isValid,
                         errors,
                         }) => (
+                            
                             <Form noValidate onSubmit={handleSubmit}>
                                 <SessionNotExist show={show}/>
                                 <Form.Group controlId="">
@@ -51,7 +73,12 @@ export default function ContextForm (){
                                 </Form.Group>
 
                                 <Form.Group controlId="">
+                                <ImageShow  handleClose={() => modalClose()} handleURL={(value) => {getImageUrlModal(value);values.imageUrl = url}}  show={showModal} query={values.name}/>
                                     <Form.Label>Link da Imagem</Form.Label>
+                                    <InputGroup>
+                                    <InputGroup.Append>
+                                        <Button variant="secondary" onClick={() => {showImages()}}><BsImage size='16'/></Button>
+                                    </InputGroup.Append>
                                     <Form.Control type='text' placeholder="Link da Imagem" name='imageUrl'
                                                                 onChange={handleChange} 
                                                                 value={values.imageUrl}
@@ -61,6 +88,7 @@ export default function ContextForm (){
 
                                     <Form.Control.Feedback ></Form.Control.Feedback>            
                                     <Form.Control.Feedback type='invalid'>{errors.imageUrl}</Form.Control.Feedback>
+                                    </InputGroup>
                                 </Form.Group>
 
                                 <Form.Group controlId="">
@@ -101,3 +129,6 @@ export default function ContextForm (){
         
     )
 }
+
+export default ContextFormCreate
+

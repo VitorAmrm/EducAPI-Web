@@ -1,6 +1,6 @@
 import React from 'react'
 import Navigation from '../../components/Navigation/Navigation'
-import ContextForm from '../../components/ContextForm/create/index'
+import ContextFormCreate from '../../components/ContextForm/create/index'
 import Footer from '../../components/Footer/index'
 import './style.css'
 
@@ -10,7 +10,7 @@ export default function CreateContext(){
             <Navigation/>
             <div className="createcontext-box">
                 <h2>Criando um Contexto</h2>
-                <ContextForm />
+                <ContextFormCreate />
             </div>
             <div className='separator'>
 
