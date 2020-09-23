@@ -12,11 +12,11 @@ import ImageShow from '../../ImageShow/index'
     const [contexts,setContexts] = useState(0)
     const [show,setShow] = useState(1)
     const [showModal,setShowModal] = useState(false)
-    const [url,setUrl] = useState('')
+   
 
     useEffect(() =>{
         
-        if(localStorage.getItem('token')){ 
+        if(localStorage.getItem('token') !== null){ 
             setShow(false)
             handleContexts()
         }else{  setShow(false)} 
@@ -36,10 +36,7 @@ import ImageShow from '../../ImageShow/index'
     }
     function modalClose(){setShowModal(false)}
     
-    function getImageUrlModal(event) {
-        setUrl(event)
-        
-    }
+    
 
     function handleContexts(){
         const token = localStorage.getItem('token')
@@ -61,7 +58,7 @@ import ImageShow from '../../ImageShow/index'
 
     return(
 
-        <Formik validationSchema={Challengeschema} onSubmit={values =>{postChallenge(values)}} initialValues={{context: 0 ,word: 'pokemon',imageUrl: 'initial',videoUrl: '',soundUrl: ''}}>
+        <Formik validationSchema={Challengeschema} onSubmit={values =>{postChallenge(values)}} initialValues={{context: 0 ,word: '',imageUrl: '',videoUrl: '',soundUrl: ''}}>
         {(
         {
                         handleSubmit,
@@ -73,14 +70,13 @@ import ImageShow from '../../ImageShow/index'
                         errors,
                         }) => (
                             <Form noValidate onSubmit={handleSubmit}>
-                                <SessionNotExist show={show}/>
+                                <SessionNotExist show={false}/>
                                  <Form.Group>
                                     <Form.Label>Contexto do desafio</Form.Label>
-                                    <Form.Control as="select" name='context' value={values.context}>
-                                        
-                                            <option>reggae</option>
-                                            <option>musica</option>
-                                            <option>pensante</option>
+                                    <Form.Control as="select" name='context' onChange={handleChange} value={values.context} isInvalid={!!errors.context} >
+                                            <option value={0}>reggae</option>
+                                            <option value={1}>musica</option>
+                                            <option value={2}>pensante</option>
                                         
                                     </Form.Control>
                                     <Form.Control.Feedback ></Form.Control.Feedback>            
@@ -100,7 +96,7 @@ import ImageShow from '../../ImageShow/index'
                                 </Form.Group>
 
                                 <Form.Group controlId="formImageUrl">
-                                    <ImageShow  handleClose={() => modalClose()} handleURL={(value) => {getImageUrlModal(value);values.imageUrl = url}}  show={showModal} query={values.word}/>
+                                    <ImageShow  handleClose={() => modalClose()} handleURL={(value) => {values.imageUrl = value;modalClose()}}  show={showModal} query={values.word}/>
                                     <Form.Label>Link da Imagem</Form.Label>
                                     <InputGroup>
                                     <InputGroup.Append>
@@ -143,7 +139,7 @@ import ImageShow from '../../ImageShow/index'
                                 </Form.Group>
 
                                
-                                <Button variant='primary' type='submit'>Cadastrar</Button>
+                                <Button variant='primary' type='submit' block>Cadastrar</Button>
 
 
                             </Form>

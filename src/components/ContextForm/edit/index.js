@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import {Form,Button,InputGroup} from 'react-bootstrap'
 import {Formik} from 'formik'
-import {Contextschema} from '../../../utils/FormSchema'
+import {EditContextschema} from '../../../utils/FormSchema'
 import api from '../../../service/api'
 import SessionNotExist from '../../../utils/SessionNotExist'
 import {BsImage} from 'react-icons/bs'
@@ -16,12 +16,13 @@ const ContextFormEdit = () => {
 
     const [show,setShow] = useState(1)
     const [showModal,setShowModal] = useState(false)
-    const [url,setUrl] = useState('')
+    const [contexts,setContexts] = useState([])
 
     useEffect(() =>{
         
-        if(localStorage.getItem('token')){ 
+        if(localStorage.getItem('token') !== null){ 
             setShow(false)
+            api.get(`v1/api/auth/contexts`).then(response => setContexts(response.data.content)).catch(error => alert('Não foi possível carregar os contextos'))
         }else{  setShow(true)} 
                     
                 },[])
@@ -31,22 +32,24 @@ const ContextFormEdit = () => {
     }
     function modalClose(){setShowModal(false)}
 
-    function getImageUrlModal(event) {
-        setUrl(event)
+    function makeOptions(){
         
+        return contexts.map((context,index) =>{
+            const {id,name} = context
+            return <option value={id}>{name}</option>
+        })
     }
 
     function onSubmit(values){
         const token = localStorage.getItem('token')
-
-            api.put('/v1/api/auth/contexts',{values},{'Authorization': token})
+        api.put(`/v1/api/auth/contexts/${values.context}`,{imageUrl: values.imageUrl,name: values.name,soundUrl: values.soundUrl,videoUrl: values.videoUrl},{'Authorization': token})
                     .then(response =>{alert(`O Contexto ${response.data.name} foi alterado`)})
                     .catch(error => {alert('Ocorreu um erro, Tente Novamente'+error)})
 
     }
 
     return(
-        <Formik validationSchema={Contextschema} onSubmit={values =>{onSubmit(values)}} initialValues={{name: '',imageUrl: '',videoUrl: '',soundUrl: ''}}>
+        <Formik validationSchema={EditContextschema} onSubmit={values =>{onSubmit(values)}} initialValues={{context: 0,name: '',imageUrl: '',videoUrl: '',soundUrl: ''}}>
         {(
         {
                         handleSubmit,
@@ -60,6 +63,15 @@ const ContextFormEdit = () => {
                             
                             <Form noValidate onSubmit={handleSubmit}>
                                 <SessionNotExist show={show}/>
+                                <Form.Group>
+                                    <Form.Label>Selecione o Contexto</Form.Label>
+                                    <Form.Control as="select" name='context' onChange={handleChange} value={values.context} isInvalid={!!errors.context} >
+                                            {makeOptions()}
+                                    </Form.Control>
+                                    <Form.Control.Feedback ></Form.Control.Feedback>            
+                                    <Form.Control.Feedback type='invalid'>{errors.context}</Form.Control.Feedback>
+                                
+                                </Form.Group>
                                 <Form.Group controlId="">
                                     <Form.Label>Nome do contexto</Form.Label>
                                     <Form.Control type="text" placeholder="Nome do Contexto" name='name'
@@ -74,7 +86,7 @@ const ContextFormEdit = () => {
                                 </Form.Group>
 
                                 <Form.Group controlId="">
-                                <ImageShow  handleClose={() => modalClose()} handleURL={(value) => {getImageUrlModal(value);values.imageUrl = url}}  show={showModal} query={values.name}/>
+                                <ImageShow  handleClose={() => modalClose()} handleURL={(value) => {values.imageUrl = value;modalClose()}}  show={showModal} query={values.name}/>
                                     <Form.Label>Link da Imagem</Form.Label>
                                     <InputGroup>
                                     <InputGroup.Append>

@@ -12,12 +12,11 @@ import ImageShow from '../../ImageShow/index'
     const [contexts,setContexts] = useState(0)
     const [show,setShow] = useState(1)
     const [showModal,setShowModal] = useState(false)
-    const [url,setUrl] = useState('')
 
 
     useEffect(() =>{
         
-        if(localStorage.getItem('token')){ 
+        if(localStorage.getItem('token') !== null){ 
             setShow(false)
             handleContexts()
         }else{  setShow(true)} 
@@ -38,10 +37,7 @@ import ImageShow from '../../ImageShow/index'
     
     function modalClose(){setShowModal(false)}
 
-    function getImageUrlModal(event) {
-        setUrl(event)
-        
-    }
+
 
     function handleContexts(){
         const token = localStorage.getItem('token')
@@ -78,12 +74,12 @@ import ImageShow from '../../ImageShow/index'
                                 <SessionNotExist show={show}/>
                                  <Form.Group>
                                     <Form.Label>Contexto do desafio</Form.Label>
-                                    <Form.Control as="select" name='context' value={values.context}>
-                                        <datalist id='context'>
+                                    <Form.Control as="select" name='context' onChange={handleChange} isInvalid={!!errors.context} value={values.context}>
+                                        
                                             <option>gggggg</option>
                                             <option>ghhhhhh</option>
                                             <option>jjjjjjj</option>
-                                        </datalist>
+                                        
                                     </Form.Control>
                                     <Form.Control.Feedback ></Form.Control.Feedback>            
                                     <Form.Control.Feedback type='invalid'>{errors.context}</Form.Control.Feedback>
@@ -102,7 +98,7 @@ import ImageShow from '../../ImageShow/index'
                                 </Form.Group>
 
                                 <Form.Group controlId="">
-                                <ImageShow  handleClose={() => modalClose()} handleURL={(value) => {getImageUrlModal(value);values.imageUrl = url}}  show={showModal} query={values.word}/>
+                                <ImageShow  handleClose={() => modalClose()} handleURL={(value) => {values.imageUrl = value;modalClose()}}  show={showModal} query={values.word}/>
                                     <Form.Label>Link da Imagem</Form.Label>
                                     <InputGroup>
                                     <InputGroup.Append>

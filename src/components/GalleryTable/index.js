@@ -14,16 +14,17 @@ const {TabPane} = Tabs
 const TableGallery = () => {
     const [contexts,setContexts] = useState([])
     const [challenges,setChalleges] = useState([])
-    const [show,setShow] = useState(0)
+    const [show,setShow] = useState(false)
 
     useEffect(() => {
       if(localStorage.getItem('token') === null ){
   
         setShow(true)
+        handleData()
 
       }else{
         setShow(false)
-        //handleData()
+        handleData()
         } 
     },[])
 
@@ -34,10 +35,9 @@ const TableGallery = () => {
     }
 
     function handleData(){
-      const token = localStorage.getItem('token')
-      api.get('v1/api/auth/contexts',{headers: {'Authorization': token}}).then(response => {setContexts(response.data)})
+      api.get(`v1/api/contexts`).then(response => {setContexts(response.data.content)}).catch(error => alert('Não foi possivel carregar os contextos'))
 
-      api.get('v1/api/auth/challenges',{headers: {'Authorization': token}}).then(response => {setChalleges(response.data)})
+      api.get(`v1/api/challenges`).then(response => {setChalleges(response.data.content)}).catch(error => alert('Não foi possivel carregar os desafios'))
     }
 
     
@@ -68,7 +68,7 @@ const TableGallery = () => {
         title: 'Autor',
         dataIndex: 'creator',
         key: 'creator',
-        render: creator => (<div className='actions'><p>{this.tratarAutor(creator)}</p></div>)
+        render: creator => (<div className='actions'><p>{tratarAutor(creator)}</p></div>)
         },
         {
           title:'Ação',
@@ -100,13 +100,13 @@ const TableGallery = () => {
           title: 'Autor',
           dataIndex: 'creator',
           key: 'creator',
-          render: creator => (<p>{this.tratarAutor(creator)}</p>)
+          render: creator => (<p>{tratarAutor(creator)}</p>)
         },
         {
           title:'Ação',
           dataIndex:'actions',
           key:'actions',
-          render: (text,record) => <button onClick={() => this.handleDelete(record)}>Delete</button>
+          render: (text,record) => (<div className='actions'><BsFillTrashFill size='24px' className='icon'/><p>Deletar</p></div>)
         }
       ]
    
@@ -139,4 +139,3 @@ const TableGallery = () => {
 export default TableGallery
 
 
-/*(text,record) =>(<div className='actions'><a onClick={this.handleDelete(record)}><BsFillTrashFill size='24px' className='icon' /></a><p>Deletar</p></div>)*/

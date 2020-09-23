@@ -13,12 +13,12 @@ const ContextFormCreate = () => {
 
     const [show,setShow] = useState(1)
     const [showModal,setShowModal] = useState(false)
-    const [url,setUrl] = useState('')
+    
 
 
     useEffect(() =>{
         
-        if(localStorage.getItem('token')){ 
+        if(!localStorage.getItem('token') !== null){ 
             setShow(false)
         }else{  setShow(true)} 
                     
@@ -29,18 +29,17 @@ const ContextFormCreate = () => {
     }
     
     function modalClose(){setShowModal(false)}
+
     
-    function getImageUrlModal(event) {
-        setUrl(event)
-        
-    }
+    
+ 
 
     function onSubmit(values){
         const token = localStorage.getItem('token')
 
-            api.post('/v1/api/auth/contexts',{values},{'Authorization': token})
+            api.post('/v1/api/auth/contexts',{imageUrl: values.imageUrl,name: values.name,soundUrl: values.soundUrl,videoUrl: values.videoUrl},{'Authorization': token})
                     .then(response =>{alert(`O Contexto ${response.data.name} foi criado`)})
-                    .catch(error => {alert('Ocorreu um erro, Tente Novamente')})
+                    .catch(error => {alert('Ocorreu um erro, Tente Novamente');console.log(error)})
 
     }
 
@@ -73,7 +72,7 @@ const ContextFormCreate = () => {
                                 </Form.Group>
 
                                 <Form.Group controlId="">
-                                <ImageShow  handleClose={() => modalClose()} handleURL={(value) => {getImageUrlModal(value);values.imageUrl = url}}  show={showModal} query={values.name}/>
+                                <ImageShow  handleClose={() => modalClose()} handleURL={(value) => {values.imageUrl = value;modalClose()}}  show={showModal} query={values.name}/>
                                     <Form.Label>Link da Imagem</Form.Label>
                                     <InputGroup>
                                     <InputGroup.Append>

@@ -34,7 +34,14 @@ import * as yup from 'yup'
     soundUrl: yup.string().url("Digite uma URL válida"),
     
 })
+const EditContextschema = yup.object().shape({
+    context: yup.number().required("Campo Obrigatório"),
+    name: yup.string().matches(/[çÇa-zA-Z.*\s]+$/,"caractere especial proibido").min(2,"no mínimo 2 caracteres").max(30,"no máximo 30 caracteres").required("Campo Obrigatório"),
+    imageUrl: yup.string().url("Digite uma URL válida").required("Campo Obrigatório"),
+    videoUrl: yup.string().url("Digite uma URL válida"),
+    soundUrl: yup.string().url("Digite uma URL válida")
+})
  
 
 
-export {Registerschema,Loginschema,Contextschema,Challengeschema}
+export {Registerschema,Loginschema,Contextschema,Challengeschema,EditContextschema}

@@ -47,11 +47,11 @@ export default function Navigation(){
                     <Nav.Link><Link to="/">Home</Link></Nav.Link>
                     <NavDropdown title="Contextos" id="basic-nav-dropdown">
                         <NavDropdown.Item><Link to="/createcontext">Criar</Link></NavDropdown.Item>
-                        <NavDropdown.Item>Editar</NavDropdown.Item>
+                        <NavDropdown.Item><Link to='/editcontext'>Editar</Link></NavDropdown.Item>
                     </NavDropdown>
                     <NavDropdown title="Desafios" id="basic-nav-dropdown">
                         <NavDropdown.Item><Link to='/createchallenge'>Criar</Link></NavDropdown.Item>
-                        <NavDropdown.Item>Editar</NavDropdown.Item>
+                        <NavDropdown.Item><Link to='/editchallenge'>Editar</Link></NavDropdown.Item>
                     </NavDropdown>
                     <Nav.Link><Link to='/gallery'>Galeria</Link></Nav.Link>
                 </Nav>
