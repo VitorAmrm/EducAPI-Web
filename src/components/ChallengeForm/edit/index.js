@@ -1,33 +1,33 @@
 import React,{useState,useEffect} from 'react'
 import {Form,Button,InputGroup} from 'react-bootstrap'
 import {Formik} from 'formik'
-import {Challengeschema} from '../../../utils/FormSchema'
+import {EditChallengeschema} from '../../../utils/FormSchema'
 import SessionNotExist from '../../../utils/SessionNotExist'
 import api from '../../../service/api'
 import {BsImage} from 'react-icons/bs'
 import ImageShow from '../../ImageShow/index'
 
  const ChallengeFormEdit = () => {
-
-    const [contexts,setContexts] = useState(0)
     const [show,setShow] = useState(1)
     const [showModal,setShowModal] = useState(false)
+    const [challenges,setChallenges] = useState([])
+    
 
 
     useEffect(() =>{
         
-        if(localStorage.getItem('token') !== null){ 
+        if(sessionStorage.getItem('token') !== null){ 
             setShow(false)
-            handleContexts()
+            handleChallenges()
         }else{  setShow(true)} 
                     
                 },[])
 
-    function makeOptions(){
-        
-        return contexts.map((context,index) =>{
-            const {id,name} = context
-            return <option value={id}>{name}</option>
+    
+    function makeOptionsforChallenges(){
+        return challenges.map((challenge,index) =>{
+            const {id,word} = challenge
+            return <option value={id}>{word}</option>
         })
     }
 
@@ -39,27 +39,26 @@ import ImageShow from '../../ImageShow/index'
 
 
 
-    function handleContexts(){
-        const token = localStorage.getItem('token')
-        
-            api.get('v1/api/auth/contexts',{Authorization: token})
-            .then(response => {setContexts(response.data); alert(JSON.stringify(response.data))})
+    
+    function handleChallenges(){
+        const token = sessionStorage.getItem('token')
+        api.get('v1/api/auth/challenges',{'Authorization': `Bearer ${token}`})
+            .then(response => {setChallenges(response.data)})
             .catch(error => alert(error))
-        
-
     }
 
+
     function putChallenge(values){
-        const token = localStorage.getItem('token')
-        api.put(`v1/api/auth/challenges/${values.context}`,{word: values.word,imageUrl: values.imageUrl,videoUrl: values.videoUrl, soundUrl: values.soundUrl},{Authorization: token})
+        const token = sessionStorage.getItem('token')
+        api.put(`v1/api/auth/challenges/${values.challenge}`,{word: values.word,imageUrl: values.imageUrl,videoUrl: values.videoUrl, soundUrl: values.soundUrl},{'Authorization': `Bearer ${token}`})
                     .then(response => {alert(` O deasfio ${response.data.word} foi alterado com sucesso`)})
-                    .catch (error => {alert(`Ocorreu um erro, Tente novamente :: ${error} `)})
+                    .catch (error => {alert(`Ocorreu um erro, Tente novamente`)})
 
     }
 
     return(
 
-        <Formik validationSchema={Challengeschema} onSubmit={values =>{putChallenge(values)}} initialValues={{context: 0 ,word: '',imageUrl: '',videoUrl: '',soundUrl: ''}}>
+        <Formik validationSchema={EditChallengeschema} onSubmit={values =>{putChallenge(values)}} initialValues={{challenge: 0,word: '',imageUrl: '',videoUrl: '',soundUrl: ''}}>
         {(
         {
                         handleSubmit,
@@ -71,20 +70,21 @@ import ImageShow from '../../ImageShow/index'
                         errors,
                         }) => (
                             <Form noValidate onSubmit={handleSubmit}>
-                                <SessionNotExist show={show}/>
-                                 <Form.Group>
-                                    <Form.Label>Contexto do desafio</Form.Label>
-                                    <Form.Control as="select" name='context' onChange={handleChange} isInvalid={!!errors.context} value={values.context}>
-                                        
-                                            <option>gggggg</option>
-                                            <option>ghhhhhh</option>
-                                            <option>jjjjjjj</option>
+                                <SessionNotExist show={show} now={Date.now()}/>
+                                <Form.Group>
+                                    <Form.Label>Selecione o desafio a ser editado</Form.Label>
+                                    <Form.Control as="select" name='context' onChange={handleChange} isInvalid={!!errors.challenge} value={values.challenge}>
+
+                                        {makeOptionsforChallenges()}    
                                         
                                     </Form.Control>
                                     <Form.Control.Feedback ></Form.Control.Feedback>            
                                     <Form.Control.Feedback type='invalid'>{errors.context}</Form.Control.Feedback>
                                 
                                 </Form.Group>
+                                
+                                
+                               
                                 <Form.Group controlId="">
                                     <Form.Label>Palavra do Desafio</Form.Label>
                                     <Form.Control type="text" placeholder="Palavra do Desafio" name='word'

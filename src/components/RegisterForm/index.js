@@ -11,8 +11,8 @@ export default function RegisterForm(){
 
     function postUser(values){
          api.post('v1/api/users',{email: values.email,name: values.name,password: values.password})
-        .then(response => {alert(JSON.stringify(response.data))})
-        .catch(error => {alert(error)})
+        .then(response => {alert(`O usuario ${response.data.name} foi criado`)})
+        .catch(error => {alert(`Algo ocorreu errado, tente novamente`)})
     }
 
     return(

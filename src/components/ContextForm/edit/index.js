@@ -20,9 +20,10 @@ const ContextFormEdit = () => {
 
     useEffect(() =>{
         
-        if(localStorage.getItem('token') !== null){ 
+        if(sessionStorage.getItem('token') !== null){ 
             setShow(false)
-            api.get(`v1/api/auth/contexts`).then(response => setContexts(response.data.content)).catch(error => alert('Não foi possível carregar os contextos'))
+            const token = sessionStorage.getItem('token')
+            api.get(`v1/api/auth/contexts`,{'Authorization': `Bearer ${token}`}).then(response => setContexts(response.data.content)).catch(error => alert('Não foi possível carregar os contextos'))
         }else{  setShow(true)} 
                     
                 },[])
@@ -41,8 +42,8 @@ const ContextFormEdit = () => {
     }
 
     function onSubmit(values){
-        const token = localStorage.getItem('token')
-        api.put(`/v1/api/auth/contexts/${values.context}`,{imageUrl: values.imageUrl,name: values.name,soundUrl: values.soundUrl,videoUrl: values.videoUrl},{'Authorization': token})
+        const token = sessionStorage.getItem('token')
+        api.put(`/v1/api/auth/contexts/${values.context}`,{imageUrl: values.imageUrl,name: values.name,soundUrl: values.soundUrl,videoUrl: values.videoUrl},{'Authorization': `Bearer ${token}`})
                     .then(response =>{alert(`O Contexto ${response.data.name} foi alterado`)})
                     .catch(error => {alert('Ocorreu um erro, Tente Novamente'+error)})
 
@@ -62,9 +63,9 @@ const ContextFormEdit = () => {
                         }) => (
                             
                             <Form noValidate onSubmit={handleSubmit}>
-                                <SessionNotExist show={show}/>
+                                <SessionNotExist show={show} now={Date.now()}/>
                                 <Form.Group>
-                                    <Form.Label>Selecione o Contexto</Form.Label>
+                                    <Form.Label>Selecione o contexto que será modificado</Form.Label>
                                     <Form.Control as="select" name='context' onChange={handleChange} value={values.context} isInvalid={!!errors.context} >
                                             {makeOptions()}
                                     </Form.Control>

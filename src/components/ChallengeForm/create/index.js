@@ -16,14 +16,14 @@ import ImageShow from '../../ImageShow/index'
 
     useEffect(() =>{
         
-        if(localStorage.getItem('token') !== null){ 
+        if(sessionStorage.getItem('token') !== null){ 
             setShow(false)
             handleContexts()
         }else{  setShow(false)} 
                     
                 },[])
 
-    function makeOptions(){
+    function makeOptionsContexts(){
         
         return contexts.map((context,index) =>{
             const {id,name} = context
@@ -39,18 +39,18 @@ import ImageShow from '../../ImageShow/index'
     
 
     function handleContexts(){
-        const token = localStorage.getItem('token')
+        const token = sessionStorage.getItem('token')
         
             api.get('v1/api/auth/contexts',{Authorization: token})
-            .then(response => {setContexts(response.data); alert(JSON.stringify(response.data))})
+            .then(response => {setContexts(response.data)})
             .catch(error => alert(error))
         
 
     }
 
     function postChallenge(values){
-        const token = localStorage.getItem('token')
-        api.post(`v1/api/auth/challenges/${values.context}`,{word: values.word,imageUrl: values.imageUrl,videoUrl: values.videoUrl, soundUrl: values.soundUrl},{Authorization: token})
+        const token = sessionStorage.getItem('token')
+        api.post(`v1/api/auth/challenges/${values.context}`,{word: values.word,imageUrl: values.imageUrl,videoUrl: values.videoUrl, soundUrl: values.soundUrl},{'Authorization': `Bearer ${token}`})
                     .then(response => {alert(` O deasfio ${response.data.word} foi criado`)})
                     .catch (error => {alert(`Ocorreu um erro, Tente novamente :: ${error} `)})
 
@@ -70,13 +70,11 @@ import ImageShow from '../../ImageShow/index'
                         errors,
                         }) => (
                             <Form noValidate onSubmit={handleSubmit}>
-                                <SessionNotExist show={false}/>
+                               <SessionNotExist show={show} now={Date.now()}/>
                                  <Form.Group>
                                     <Form.Label>Contexto do desafio</Form.Label>
                                     <Form.Control as="select" name='context' onChange={handleChange} value={values.context} isInvalid={!!errors.context} >
-                                            <option value={0}>reggae</option>
-                                            <option value={1}>musica</option>
-                                            <option value={2}>pensante</option>
+                                            {makeOptionsContexts()}
                                         
                                     </Form.Control>
                                     <Form.Control.Feedback ></Form.Control.Feedback>            

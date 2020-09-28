@@ -35,9 +35,9 @@ const ContextFormCreate = () => {
  
 
     function onSubmit(values){
-        const token = localStorage.getItem('token')
+        const token = sessionStorage.getItem('token')
 
-            api.post('/v1/api/auth/contexts',{imageUrl: values.imageUrl,name: values.name,soundUrl: values.soundUrl,videoUrl: values.videoUrl},{'Authorization': token})
+            api.post('/v1/api/auth/contexts',{imageUrl: values.imageUrl,name: values.name,soundUrl: values.soundUrl,videoUrl: values.videoUrl},{'Authorization': `Bearer ${token}`})
                     .then(response =>{alert(`O Contexto ${response.data.name} foi criado`)})
                     .catch(error => {alert('Ocorreu um erro, Tente Novamente');console.log(error)})
 
@@ -57,7 +57,7 @@ const ContextFormCreate = () => {
                         }) => (
                             
                             <Form noValidate onSubmit={handleSubmit}>
-                                <SessionNotExist show={show}/>
+                                <SessionNotExist show={show} now={Date.now()}/>
                                 <Form.Group controlId="">
                                     <Form.Label>Nome do contexto</Form.Label>
                                     <Form.Control type="text" placeholder="Nome do Contexto" name='name'

@@ -10,29 +10,31 @@ import {useHistory,Link} from 'react-router-dom'
 
 
 
-
 export default function LoginForm(){
 
     const history = useHistory();
+    
 
-
-   function authorization(email,password){
+    function authorization(email,password){
         
         const invalid = "Invalid e-mail or password. Login not successful.";
         
-        api.post('auth/login',{email: email,password: password})
+        api.post('v1/api/auth/login',{email: email,password: password})
                              .then(response => {
                                  if(response.data.token === invalid){
-                                    console.log( {'isValid': false, 'message': response.data.token})
                                     alert("senha ou email invalido, tente novamente")
                                  }else{
-                                    localStorage.setItem('token',response.data.token)
-                                    localStorage.setItem('email',email)
-                                    localStorage.setItem('token_exp',new Date().getHours()*60+new Date().getMinutes+1800)
+                                    
+                                    let datafromtoken = response.data.token.split('.')
+                                    sessionStorage.setItem('token',response.data.token)
+                                    let payload = JSON.parse(atob(datafromtoken[1]))
+                                    sessionStorage.setItem('email',payload.sub)
+                                    sessionStorage.setItem('exp',payload.exp)
+                                    console.log(Date.now())
                                     history.push('/gallery')
                                  }
                              })
-                             .catch(error => console.log(error))
+                             .catch(error => alert(`Ocorreu um erro, tente novamente`))
     }
 
     return(

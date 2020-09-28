@@ -1,11 +1,12 @@
 import React,{useState,useEffect} from 'react'
 import {Container} from 'react-bootstrap'
-import {Tabs,Table} from 'antd'
+import {Tabs,Table,Popconfirm} from 'antd'
 import api from '../../service/api'
 import {BsFillTrashFill} from 'react-icons/bs'
 import './style.css'
 import 'antd/dist/antd.css';
 import SessionNotExist from '../../utils/SessionNotExist'
+
 
 const {TabPane} = Tabs
 
@@ -16,8 +17,11 @@ const TableGallery = () => {
     const [challenges,setChalleges] = useState([])
     const [show,setShow] = useState(false)
 
+   
+
     useEffect(() => {
-      if(localStorage.getItem('token') === null ){
+
+      if(sessionStorage.getItem('token') === null ){
   
         setShow(true)
         handleData()
@@ -25,12 +29,16 @@ const TableGallery = () => {
       }else{
         setShow(false)
         handleData()
-        } 
+        }
+      
     },[])
+
+
+
 
     function tratarAutor(creator){
 
-        if(creator === null){return 'Autor Fantasma'}
+        if(creator === null){return '-'}
         else{return creator.name}
     }
 
@@ -39,7 +47,14 @@ const TableGallery = () => {
 
       api.get(`v1/api/challenges`).then(response => {setChalleges(response.data.content)}).catch(error => alert('Não foi possivel carregar os desafios'))
     }
-
+    function handleDeleteContext(record){
+      const token = sessionStorage.getItem('token')
+      api.delete(`/v1/api/auth/contexts/${record}`,{"Authorization":`Bearer ${token}`}).then(response => alert("Contexto excluido com sucesso")).catch("Erro ao excluir o contexto")
+    }
+    function handleDeleteChallenge(record){
+      const token = sessionStorage.getItem('token')
+      api.delete(`/v1/api/auth/contexts/${record}`,{"Authorization":`Bearer ${token}`}).then(response => alert("Contexto excluido com sucesso")).catch("Erro ao excluir o contexto")
+    }
     
       
                 
@@ -74,7 +89,8 @@ const TableGallery = () => {
           title:'Ação',
           dataIndex:'actions',
           key:'actions',
-          render: text =>(<div className='actions'><BsFillTrashFill size='24px' className='icon'/><p>Deletar</p></div>)
+          render: (text,record) =>(<Popconfirm title="Tem certeza que deseja deletar?" onConfirm={() => handleDeleteContext(record.id)}>
+          <div className='actions'><BsFillTrashFill size='24px' className='icon'/><p>Deletar</p></div></Popconfirm>)
         }
       ]
       var columnsChallenges = [{
@@ -106,7 +122,8 @@ const TableGallery = () => {
           title:'Ação',
           dataIndex:'actions',
           key:'actions',
-          render: (text,record) => (<div className='actions'><BsFillTrashFill size='24px' className='icon'/><p>Deletar</p></div>)
+          render: (text,record) => (<Popconfirm title="Sure to delete?" onConfirm={() => handleDeleteChallenge(record.id)}>
+          <div className='actions'><BsFillTrashFill size='24px' className='icon'/><p>Deletar</p></div></Popconfirm>)
         }
       ]
    
@@ -116,7 +133,7 @@ const TableGallery = () => {
           return (
         
         <Container fluid className='background-table'>
-                <SessionNotExist show={show}/>
+                <SessionNotExist show={show} now={Date.now()}/>
                 <Tabs defaultActiveKey="1" centered size='large'>
                     <TabPane tab="Contextos" key="1">
                         <div className='container-table'>
@@ -130,7 +147,7 @@ const TableGallery = () => {
                     </TabPane>
                 </Tabs>
         </Container>
-
+        
 );
     
 

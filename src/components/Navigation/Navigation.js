@@ -14,9 +14,9 @@ export default function Navigation(){
     const history = useHistory()
 
     const Logout = () => {
-        localStorage.removeItem('token')
-        localStorage.removeItem('email')
-        localStorage.removeItem('token_exp')
+        sessionStorage.removeItem('token')
+        sessionStorage.removeItem('email')
+        sessionStorage.removeItem('token_exp')
         history.push('/login')
     }
     const Login = () =>{
@@ -24,16 +24,16 @@ export default function Navigation(){
     }
 
     React.useEffect(() => {
-        if(localStorage.getItem('token')){setLogio('Sair')}else{setLogio('Entrar')}
+        if(sessionStorage.getItem('token')){setLogio('Sair')}else{setLogio('Entrar')}
     },[])
 
     function LogButton() {
         if(Logio === 'Entrar'){
             return (<OverlayTrigger key='bottom' placement='bottom' overlay={<Tooltip>Faça Login ou Registre-se</Tooltip>}>
-                <Nav.Link onClick={Login}><Link to='/login'>{Logio}</Link></Nav.Link></OverlayTrigger>)
+                <Nav.Link onClick={Login}>{Logio}</Nav.Link></OverlayTrigger>)
         }else{
-        return  (<Link to='/'><OverlayTrigger key='bottom' placement='bottom' overlay={<Tooltip>Logado como : <strong>{localStorage.getItem('email')}</strong></Tooltip>}>
-            <Nav.Link onClick={Logout}>{Logio}</Nav.Link></OverlayTrigger></Link>)
+        return  (<OverlayTrigger key='bottom' placement='bottom' overlay={<Tooltip>Logado como : <strong>{sessionStorage.getItem('email')}</strong></Tooltip>}>
+            <Nav.Link onClick={Logout}>{Logio}</Nav.Link></OverlayTrigger>)
         }
     }
 
@@ -44,8 +44,8 @@ export default function Navigation(){
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                    <Nav.Link><Link to="/">Home</Link></Nav.Link>
-                    <NavDropdown title="Contextos" id="basic-nav-dropdown">
+                <Link to="/"><Nav.Link as='ul'>Home</Nav.Link></Link>
+                    <NavDropdown bsPrefix='nav-link'title="Contextos" id="basic-nav-dropdown">
                         <NavDropdown.Item><Link to="/createcontext">Criar</Link></NavDropdown.Item>
                         <NavDropdown.Item><Link to='/editcontext'>Editar</Link></NavDropdown.Item>
                     </NavDropdown>
@@ -53,9 +53,9 @@ export default function Navigation(){
                         <NavDropdown.Item><Link to='/createchallenge'>Criar</Link></NavDropdown.Item>
                         <NavDropdown.Item><Link to='/editchallenge'>Editar</Link></NavDropdown.Item>
                     </NavDropdown>
-                    <Nav.Link><Link to='/gallery'>Galeria</Link></Nav.Link>
+                    <Link to="/gallery"><Nav.Link as='ul'>Galeria</Nav.Link></Link>
                 </Nav>
-                <Nav>
+                <Nav as='ul'>
                     {LogButton()}
                 </Nav>
             </Navbar.Collapse>

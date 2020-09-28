@@ -41,7 +41,15 @@ const EditContextschema = yup.object().shape({
     videoUrl: yup.string().url("Digite uma URL válida"),
     soundUrl: yup.string().url("Digite uma URL válida")
 })
+const EditChallengeschema = yup.object().shape({
+    challenge: yup.number().required("Campo Obrigatório"),
+    word: yup.string().matches(/[çÇa-zA-Z.*\s]+$/,"Caractere especial proibido").min(2,"no mínimo 2 caracteres").max(30,"no máximo 30 caracteres").required("Campo Obrigatório"),
+    imageUrl: yup.string().url("Digite uma URL válida").required("Campo Obrigatório"),
+    videoUrl: yup.string().url("Digite uma URL válida"),
+    soundUrl: yup.string().url("Digite uma URL válida"),
+    
+})
  
 
 
-export {Registerschema,Loginschema,Contextschema,Challengeschema,EditContextschema}
+export {Registerschema,Loginschema,Contextschema,Challengeschema,EditContextschema,EditChallengeschema}

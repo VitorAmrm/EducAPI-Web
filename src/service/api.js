@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://educapi-a4s.herokuapp.com/',
+    baseURL: 'https://educapi-a4sufpb.herokuapp.com/',
     responseType: "json"
 });
 

@@ -48,7 +48,7 @@ import api from '../../service/api'
     useEffect(() => {
         
         if(props.variant === 'contexts'){
-          api.get(`v1/api/contexts`).then(response => {setContexts(response.data.content);console.log("chimbalaie, quando vejo o sol beijando o mar")}).catch(error => console.log(error))
+          api.get(`/v1/api/contexts`).then(response => {setContexts(response.data.content)}).catch(error => {})
         }else{
             api.get('/v1/api/challenges').then(response => {setChallenges(response.data.content)}).catch(error => {})
         }
@@ -79,7 +79,7 @@ import api from '../../service/api'
                 <div className='card'>
                 <div className='container-image'>
                             <img src={imageUrl} alt=''/>
-                            <img className='blur' src={imageUrl} alt=''/>
+                            
                         </div>
                         <div className='container-text'>
                             <h2>{name}</h2>
@@ -91,7 +91,7 @@ import api from '../../service/api'
         return (
             <div className='container'>
                 <Slider {...settings}>
-                    {renderCards()}
+                      {renderCards()}
                 </Slider>
             </div>
           );
