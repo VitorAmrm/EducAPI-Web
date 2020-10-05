@@ -23,7 +23,7 @@ const ContextFormEdit = () => {
         if(sessionStorage.getItem('token') !== null){ 
             setShow(false)
             const token = sessionStorage.getItem('token')
-            api.get(`v1/api/auth/contexts`,{'Authorization': `Bearer ${token}`}).then(response => setContexts(response.data.content)).catch(error => alert('Não foi possível carregar os contextos'))
+            api.get(`v1/api/auth/contexts`,{headers: {Authorization: `Bearer ${token}`}}).then(response => setContexts(response.data)).catch(error => alert('Não foi possível carregar os contextos'))
         }else{  setShow(true)} 
                     
                 },[])
@@ -65,7 +65,7 @@ const ContextFormEdit = () => {
                             <Form noValidate onSubmit={handleSubmit}>
                                 <SessionNotExist show={show} now={Date.now()}/>
                                 <Form.Group>
-                                    <Form.Label>Selecione o contexto que será modificado</Form.Label>
+                                    <Form.Label>Selecione o contexto a ser editado</Form.Label>
                                     <Form.Control as="select" name='context' onChange={handleChange} value={values.context} isInvalid={!!errors.context} >
                                             {makeOptions()}
                                     </Form.Control>

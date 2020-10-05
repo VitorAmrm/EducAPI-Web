@@ -42,7 +42,7 @@ import ImageShow from '../../ImageShow/index'
     
     function handleChallenges(){
         const token = sessionStorage.getItem('token')
-        api.get('v1/api/auth/challenges',{'Authorization': `Bearer ${token}`})
+        api.get('v1/api/auth/challenges',{headers: {Authorization: `Bearer ${token}`}})
             .then(response => {setChallenges(response.data)})
             .catch(error => alert(error))
     }

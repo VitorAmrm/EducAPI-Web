@@ -41,7 +41,7 @@ import ImageShow from '../../ImageShow/index'
     function handleContexts(){
         const token = sessionStorage.getItem('token')
         
-            api.get('v1/api/auth/contexts',{Authorization: token})
+            api.get('v1/api/auth/contexts',{headers: {Authorization: `Bearer ${token}`}})
             .then(response => {setContexts(response.data)})
             .catch(error => alert(error))
         
