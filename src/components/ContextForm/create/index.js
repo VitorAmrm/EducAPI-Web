@@ -18,9 +18,9 @@ const ContextFormCreate = () => {
 
     useEffect(() =>{
         
-        if(!localStorage.getItem('token') !== null){ 
-            setShow(false)
-        }else{  setShow(true)} 
+        if(sessionStorage.getItem('token') !== null){ 
+            setShow(true)
+        }else{  setShow(false)} 
                     
                 },[])
                 
