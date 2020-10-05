@@ -3,6 +3,7 @@ import Navigation from '../../components/Navigation/Navigation'
 import ContextFormCreate from '../../components/ContextForm/create/index'
 import Footer from '../../components/Footer/index'
 import './style.css'
+import '../../index.css'
 
 export default function CreateContext(){
     return (

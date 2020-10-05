@@ -6,13 +6,18 @@ import Footer from '../../components/Footer/index'
 
 export default function EditChallenge(){
     return (
-        <div> 
+        <div clasName='body'> 
             <Navigation/>
             <div className="createchallenge-box">
                 <h2>Editando um Desafio</h2>
                 <ChallengeFormEdit />
             </div>
+            <div className='separator'>
+
+            </div>
+            <div className='footer-container'>
             <Footer/>
+            </div>
         </div>
     );
 }

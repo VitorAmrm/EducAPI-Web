@@ -9,7 +9,7 @@ import ImageShow from '../../ImageShow/index'
 
  const ChallengeFormCreate = () => {
 
-    const [contexts,setContexts] = useState(0)
+    const [contexts,setContexts] = useState([])
     const [show,setShow] = useState(1)
     const [showModal,setShowModal] = useState(false)
    
@@ -19,7 +19,7 @@ import ImageShow from '../../ImageShow/index'
         if(sessionStorage.getItem('token') !== null){ 
             setShow(false)
             handleContexts()
-        }else{  setShow(false)} 
+        }else{  setShow(true)} 
                     
                 },[])
 

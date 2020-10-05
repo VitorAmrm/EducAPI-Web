@@ -44,7 +44,7 @@ export default function Navigation(){
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
-                <Link to="/"><Nav.Link as='ul'>Home</Nav.Link></Link>
+                <Link to="/"><Nav.Link as='ul'>Início</Nav.Link></Link>
                     <NavDropdown bsPrefix='nav-link'title="Contextos" id="basic-nav-dropdown">
                         <NavDropdown.Item><Link to="/createcontext">Criar</Link></NavDropdown.Item>
                         <NavDropdown.Item><Link to='/editcontext'>Editar</Link></NavDropdown.Item>
