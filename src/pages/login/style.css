@@ -1,11 +1,18 @@
-
-Row{
+.container-content{
+    width: 100%;
+    height: 100%;
     display: flex;
-    justify-items: center;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
+}
+.row-content{
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-content: center;
-    margin:auto;
+    align-items: center;
 }
 .image-box{
     margin-bottom: 20px;

@@ -38,7 +38,7 @@ export default function LoginForm(){
     }
 
     return(
-        <Formik validationSchema={Loginschema} onSubmit={values =>{console.log(authorization(values.email,values.password))}} initialValues={{email: 'Otto',password: ''}}>
+        <Formik validationSchema={Loginschema} onSubmit={values =>{console.log(authorization(values.email,values.password))}} initialValues={{email: '',password: ''}}>
         {(
         {
                         handleSubmit,

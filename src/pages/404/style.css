@@ -1,0 +1,24 @@
+/*background-color: rgb(21, 168, 173);*/
+.container-404{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    margin: 10%;
+}
+.number-404 h1{
+    margin-bottom: 20px !important;
+    font-weight: 1000;
+    font-size: 05cm;
+    color:rgb(21, 168, 173);
+}
+.text-404 h3{
+    color: rgb(51, 51, 51);
+    font-weight: 900;
+    font-size: 1cm;
+}
+
+
+.returntohome{
+    margin: 20px
+}

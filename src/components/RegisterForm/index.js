@@ -4,14 +4,16 @@ import {Form,Button} from 'react-bootstrap'
 import {Registerschema} from '../../utils/FormSchema'
 import {Formik} from 'formik'
 import api from '../../service/api'
+import {useHistory} from 'react-router-dom'
 
 
 export default function RegisterForm(){
 
+    const history = useHistory()
 
     function postUser(values){
          api.post('v1/api/users',{email: values.email,name: values.name,password: values.password})
-        .then(response => {alert(`O usuario ${response.data.name} foi criado`)})
+        .then(response => {alert(`O usuario ${response.data.name} foi criado`);history.push('/login')})
         .catch(error => {alert(`Algo ocorreu errado, tente novamente`)})
     }
 
@@ -83,7 +85,7 @@ export default function RegisterForm(){
                                             <Form.Control.Feedback ></Form.Control.Feedback>
                                 <Form.Control.Feedback type='invalid'>{errors.password2}</Form.Control.Feedback>
                             </Form.Group>
-                            <Button variant="primary" type="submit">
+                            <Button variant="primary" type="submit" block>
                                 Cadastrar
                             </Button>
                         </Form>

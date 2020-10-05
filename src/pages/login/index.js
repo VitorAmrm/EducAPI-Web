@@ -8,8 +8,8 @@ import image from '../../assets/logotipofinal_prancheta2.png'
 
 export default function LoginPage(){
     return (
-            <Container>
-                <Row>
+            <Container className='container-content' > 
+                <Row className='row-content'>
                     <Col className='column-content'>
                         <div className="image-box">
                             <Image src={image} fluid/>
