@@ -14,7 +14,7 @@ import ImageShow from '../../ImageShow/index'
 
 const ContextFormEdit = () => {
 
-    const [show,setShow] = useState(1)
+    const [show,setShow] = useState(false)
     const [showModal,setShowModal] = useState(false)
     const [contexts,setContexts] = useState([])
 
@@ -37,7 +37,7 @@ const ContextFormEdit = () => {
         
         return contexts.map((context,index) =>{
             const {id,name} = context
-            return <option value={id}>{name}</option>
+            return <option key={id} value={id}>{name}</option>
         })
     }
 

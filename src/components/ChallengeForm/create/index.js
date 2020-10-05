@@ -27,7 +27,7 @@ import ImageShow from '../../ImageShow/index'
         
         return contexts.map((context,index) =>{
             const {id,name} = context
-            return <option value={id}>{name}</option>
+            return <option key={id} value={id}>{name}</option>
         })
     }
 

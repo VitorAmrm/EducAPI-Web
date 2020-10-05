@@ -32,7 +32,7 @@ export default function ImageShow (props) {
    
 
     function renderizar(){
-        return images.map((img,index) => {return <img onClick={() => {props.handleURL(img.url)}} className='result-image' alt={img.description} width="200" height="100" src={img.url}></img>})
+        return images.map((img,index) => {return <img key={index} onClick={() => {props.handleURL(img.url)}} className='result-image' alt={img.description} width="200" height="100" src={img.url}></img>})
 
     }
     

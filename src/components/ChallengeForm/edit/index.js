@@ -27,7 +27,7 @@ import ImageShow from '../../ImageShow/index'
     function makeOptionsforChallenges(){
         return challenges.map((challenge,index) =>{
             const {id,word} = challenge
-            return <option value={id}>{word}</option>
+            return <option key={id} value={id}>{word}</option>
         })
     }
 
