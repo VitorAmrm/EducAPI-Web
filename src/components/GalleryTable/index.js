@@ -49,11 +49,11 @@ const TableGallery = () => {
     }
     function handleDeleteContext(record){
       const token = sessionStorage.getItem('token')
-      api.delete(`/v1/api/auth/contexts/${record}`,{"Authorization":`Bearer ${token}`}).then(response => alert("Contexto excluido com sucesso")).catch("Erro ao excluir o contexto")
+      api.delete(`/v1/api/auth/contexts/${record}`,{headers: {Authorization: `Bearer ${token}`}}).then(response => alert("Contexto excluido com sucesso")).catch("Erro ao excluir o contexto")
     }
     function handleDeleteChallenge(record){
       const token = sessionStorage.getItem('token')
-      api.delete(`/v1/api/auth/contexts/${record}`,{"Authorization":`Bearer ${token}`}).then(response => alert("Contexto excluido com sucesso")).catch("Erro ao excluir o contexto")
+      api.delete(`/v1/api/auth/contexts/${record}`,{headers: {Authorization: `Bearer ${token}`}}).then(response => alert("Contexto excluido com sucesso")).catch("Erro ao excluir o contexto")
     }
     
       

@@ -37,9 +37,9 @@ const ContextFormCreate = () => {
     function onSubmit(values){
         const token = sessionStorage.getItem('token')
 
-            api.post('/v1/api/auth/contexts',{imageUrl: values.imageUrl,name: values.name,soundUrl: values.soundUrl,videoUrl: values.videoUrl},{'Authorization': `Bearer ${token}`})
+            api.post('/v1/api/auth/contexts',{imageUrl: values.imageUrl,name: values.name,soundUrl: values.soundUrl,videoUrl: values.videoUrl},{headers: {Authorization: `Bearer ${token}`}})
                     .then(response =>{alert(`O Contexto ${response.data.name} foi criado`)})
-                    .catch(error => {alert('Ocorreu um erro, Tente Novamente');console.log(error)})
+                    .catch(error => {alert('Ocorreu um erro, Tente Novamente')})
 
     }
 

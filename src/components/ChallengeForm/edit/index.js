@@ -50,7 +50,7 @@ import ImageShow from '../../ImageShow/index'
 
     function putChallenge(values){
         const token = sessionStorage.getItem('token')
-        api.put(`v1/api/auth/challenges/${values.challenge}`,{word: values.word,imageUrl: values.imageUrl,videoUrl: values.videoUrl, soundUrl: values.soundUrl},{'Authorization': `Bearer ${token}`})
+        api.put(`v1/api/auth/challenges/${values.challenge}`,{word: values.word,imageUrl: values.imageUrl,videoUrl: values.videoUrl, soundUrl: values.soundUrl},{headers: {Authorization: `Bearer ${token}`}})
                     .then(response => {alert(` O deasfio ${response.data.word} foi alterado com sucesso`)})
                     .catch (error => {alert(`Ocorreu um erro, Tente novamente`)})
 

@@ -43,7 +43,7 @@ const ContextFormEdit = () => {
 
     function onSubmit(values){
         const token = sessionStorage.getItem('token')
-        api.put(`/v1/api/auth/contexts/${values.context}`,{imageUrl: values.imageUrl,name: values.name,soundUrl: values.soundUrl,videoUrl: values.videoUrl},{'Authorization': `Bearer ${token}`})
+        api.put(`/v1/api/auth/contexts/${values.context}`,{imageUrl: values.imageUrl,name: values.name,soundUrl: values.soundUrl,videoUrl: values.videoUrl},{headers: {Authorization: `Bearer ${token}`}})
                     .then(response =>{alert(`O Contexto ${response.data.name} foi alterado`)})
                     .catch(error => {alert('Ocorreu um erro, Tente Novamente'+error)})
 

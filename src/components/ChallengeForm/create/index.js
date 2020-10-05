@@ -50,9 +50,9 @@ import ImageShow from '../../ImageShow/index'
 
     function postChallenge(values){
         const token = sessionStorage.getItem('token')
-        api.post(`v1/api/auth/challenges/${values.context}`,{word: values.word,imageUrl: values.imageUrl,videoUrl: values.videoUrl, soundUrl: values.soundUrl},{'Authorization': `Bearer ${token}`})
+        api.post(`v1/api/auth/challenges/${values.context}`,{word: values.word,imageUrl: values.imageUrl,videoUrl: values.videoUrl, soundUrl: values.soundUrl},{headers: {Authorization: `Bearer ${token}`}})
                     .then(response => {alert(` O deasfio ${response.data.word} foi criado`)})
-                    .catch (error => {alert(`Ocorreu um erro, Tente novamente :: ${error} `)})
+                    .catch (error => {alert(`Ocorreu um erro, Tente novamente`)})
 
     }
 
