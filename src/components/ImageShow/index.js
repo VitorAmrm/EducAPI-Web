@@ -20,7 +20,7 @@ export default function ImageShow (props) {
             setNullQuery('Você precisa digitar o nome do contexto ou a palavra do desafio primeiro')
         }
         else{
-        const client = new GoogleImages(process.env.REACT_APP_CX,process.env.REACT_APP_API_KEY)
+        const client = new GoogleImages(process.env.CX,process.env.API_KEY)
         
         const imagesSearch = client.search(props.query)
 

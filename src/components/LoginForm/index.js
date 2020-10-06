@@ -23,6 +23,8 @@ export default function LoginForm(){
                              .then(response => {
                                  if(response.data.token === invalid){
                                     alert("senha ou email invalido, tente novamente")
+                                 }else if(response.status === 401){
+                                    alert("Usuário não encontrado")
                                  }else{
                                     
                                     let datafromtoken = response.data.token.split('.')
